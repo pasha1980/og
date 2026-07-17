@@ -1,4 +1,4 @@
-# OG: OGrep (or "Oh my God, you broke it again!")
+# OGrep (or "Oh my God, you broke it again!")
 
 Local semantic code indexer and LLM context packer written in [Odin](https://odin-lang.org/).
 
