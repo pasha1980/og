@@ -3,10 +3,10 @@ ODIN ?= odin
 .PHONY: build test run clean
 
 build:
-	$(ODIN) build . -out:og
+	$(ODIN) build ./src -out:og
 
 test:
-	$(ODIN) test tests/ -file
+	$(ODIN) test ./src/tests/ -file
 
 clean:
 	rm -f og
