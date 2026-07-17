@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    if: github.event.base_ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Odin
+      uses: laytan/setup-odin@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        llvm-version: 18
+        build-type: 'release'
+
+    - name: Check Odin Version
+      run: odin version
+
+    - name: Build Project (Linux)
+      run: odin build . -out:og
+
+      # TODO: cross-compilation support
+
+    - name: Release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "release-artifacts.tar.gz"
+        token: ${{ secrets.GITHUB_TOKEN }}
+        generateReleaseNotes: true
