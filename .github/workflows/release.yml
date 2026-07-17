@@ -5,6 +5,9 @@ on:
     tags:
       - '*'
 
+permissions:
+  contents: write
+
 jobs:
   build:
     if: github.event.base_ref == 'refs/heads/main'
@@ -31,6 +34,6 @@ jobs:
     - name: Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "release-artifacts.tar.gz"
+        artifacts: "./og"
         token: ${{ secrets.GITHUB_TOKEN }}
         generateReleaseNotes: true
