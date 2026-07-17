@@ -282,7 +282,7 @@ collect_files :: proc(
         rel = strings.trim_prefix(rel, "/")
         matcher_should_ignore(&matcher, rel, false) or_continue
 
-        _, := is_code_file(info.fullpath) or_continue
+        is_code_file(info.fullpath) or_continue
 
         full := strings.clone(info.fullpath, allocator)
         append(&files, full)
