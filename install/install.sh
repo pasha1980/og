@@ -9,6 +9,10 @@ echoexit() {
     exit "$code"
 }
 
+log() {
+    echo "$1" >&2
+}
+
 downloader() {
     downloader=
     command -v curl > /dev/null && downloader='curl'
@@ -56,32 +60,32 @@ wget_download() {
 }
 
 print_adjust_path() {
-    echo
-    echo
-    echo 'To make OG accessible set'
-    echo '      export PATH="${HOME}/.local/bin:${PATH}"'
-    echo 'to your init script (~/.bashrc or ~/.config/fish/config.fish)'
-    echo
-    echo
+    log
+    log
+    log 'To make OG accessible set'
+    log '      export PATH="${HOME}/.local/bin:${PATH}"'
+    log 'to your init script (~/.bashrc or ~/.config/fish/config.fish)'
+    log
+    log
 }
 
 main() {
     local d=${ downloader ;}
-    echo "Using $d to download OG" >&2
+    log "Using $d to download OG"
     # Temporary supports only Linux amd64
     # local bname=${ binary_name ;}
     local bname="og"
-    echo "Binary name: $bname" >&2
+    log "Binary name: $bname"
     ${d}_download "$bname"
 
     chmod +x /tmp/og
     [[ ! -d ~/.local/bin ]] && mkdir -p ~/.local/bin
     mv /tmp/og ~/.local/bin/og
 
-    echo 'OG installed successfuly to ~/.local/bin/og'
+    log 'OG installed successfuly to ~/.local/bin/og'
     grep "${HOME}/.local/bin" <<< "$PATH" > /dev/null || print_adjust_path
     export PATH="${HOME}/.local/bin:${PATH}"
-    echo 'Try to run `og --help`'
+    log 'Try to run `og --help`'
 }
 
 main "$@"
